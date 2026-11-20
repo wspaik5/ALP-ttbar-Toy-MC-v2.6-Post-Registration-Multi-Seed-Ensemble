@@ -1,0 +1,153 @@
+======================================================================
+v2.6 Post-Registration: Multi-Seed Ensemble
+N_seeds = 50, SEED_CONV(i) = 100i + 5, SEED_SIG(i) = 100i + 11
+Two configs per seed: E3 (v2.5) and E3_conflated (v2.4-equivalent)
+======================================================================
+
+======================================================================
+ENSEMBLE STATISTICS
+======================================================================
+
+  E3 at η=2.0:
+    17 MeV: HV = 1.1396 ± 0.0018 [1.1392, 1.1401], Tag = 1.7371 ± 0.1292 [1.7013, 1.7729]
+    50 MeV: HV = 1.1473 ± 0.0022 [1.1467, 1.1480], Tag = 1.2211 ± 0.0128 [1.2175, 1.2246]
+    100 MeV: HV = 1.1186 ± 0.0076 [1.1165, 1.1207], Tag = 1.1104 ± 0.0030 [1.1096, 1.1113]
+    200 MeV: HV = 1.0555 ± 0.0016 [1.0550, 1.0559], Tag = 1.0614 ± 0.0013 [1.0610, 1.0617]
+
+  E3_conflated at η=2.0:
+    17 MeV: HV = 1.0945 ± 0.0017, Tag = 1.7350 ± 0.1295
+    50 MeV: HV = 1.0999 ± 0.0015, Tag = 1.1712 ± 0.0144
+    100 MeV: HV = 1.0817 ± 0.0062, Tag = 1.0709 ± 0.0028
+    200 MeV: HV = 1.0359 ± 0.0012, Tag = 1.0381 ± 0.0010
+
+  Deconflation delta (E3 − E3_conflated) at η=2.0:
+    17 MeV: ΔHV = +0.0452 ± 0.0010 [+0.0449, +0.0454], ΔTag = +0.0021 ± 0.0032 [+0.0012, +0.0029]
+    50 MeV: ΔHV = +0.0474 ± 0.0013 [+0.0470, +0.0478], ΔTag = +0.0499 ± 0.0024 [+0.0492, +0.0506]
+    100 MeV: ΔHV = +0.0369 ± 0.0045 [+0.0357, +0.0382], ΔTag = +0.0396 ± 0.0011 [+0.0392, +0.0399]
+    200 MeV: ΔHV = +0.0196 ± 0.0017 [+0.0191, +0.0201], ΔTag = +0.0233 ± 0.0007 [+0.0231, +0.0235]
+
+  η scan at 17 MeV (E3):
+    η=1.5: HV = 1.1423 ± 0.0020 [1.1418, 1.1429], Tag = 1.3824 ± 0.0284 [1.3745, 1.3903]
+    η=1.7: HV = 1.1411 ± 0.0016 [1.1406, 1.1415], Tag = 1.4237 ± 0.0266 [1.4163, 1.4311]
+    η=2.0: HV = 1.1396 ± 0.0018 [1.1392, 1.1401], Tag = 1.7371 ± 0.1292 [1.7013, 1.7729]
+    η=2.3: HV = 1.1381 ± 0.0021 [1.1375, 1.1386], Tag = 2.6136 ± 0.1032 [2.5850, 2.6423]
+    η=2.5: HV = 1.1374 ± 0.0025 [1.1367, 1.1381], Tag = 3.3221 ± 0.1205 [3.2887, 3.3555]
+
+======================================================================
+SANITY GATES
+======================================================================
+
+  Gate 1 (code identity):
+    mtag_v24.py SHA-256: 053a0e6c8fa70130...
+    Match: True
+    Gate 1: PASS
+
+  Gate 2 (tag formula consistency):
+    lambda(z=1000, far): 683.0349 (expect > 0)
+    lambda(z=300, near): -3.3435 (expect < 0)
+    Gate 2: PASS
+
+  Gate 3 (coverage consistency):
+    n_sig=2.0, sigma=1.0: C=0.070435 ref=0.070 OK
+    n_sig=3.0, sigma=1.0: C=0.085217 ref=0.085 OK
+    n_sig=4.0, sigma=1.0: C=0.100000 ref=0.100 OK
+    Gate 3: PASS
+
+  Gate 4 (seed i=0 vs published v2.5 [N_SIG=60,000]):
+    §7.1 — Endcap E3 at η=2.0:
+      17 MeV: HV=1.1393 (ref 1.1393) OK, Tag=1.6892 (ref 1.6892) OK
+      50 MeV: HV=1.1463 (ref 1.1458) DIFF, Tag=1.2197 (ref 1.2191) DIFF
+      100 MeV: HV=1.1322 (ref 1.1322) OK, Tag=1.1079 (ref 1.1073) DIFF
+      200 MeV: HV=1.0597 (ref 1.0598) DIFF, Tag=1.0611 (ref 1.0611) OK
+    §7.2 — η scan at 17 MeV:
+      η=1.5: HV=1.1442 (ref 1.1431) DIFF, Tag=1.4013 (ref 1.3986) DIFF
+      η=1.7: HV=1.1424 (ref 1.1427) DIFF, Tag=1.4099 (ref 1.4095) DIFF
+      η=2.0: HV=1.1393 (ref 1.1393) OK, Tag=1.6892 (ref 1.6892) OK
+      η=2.3: HV=1.1417 (ref 1.1417) OK, Tag=2.7098 (ref 2.7098) OK
+      η=2.5: HV=1.1412 (ref 1.1412) OK, Tag=3.4441 (ref 3.4441) OK
+    Gate 4: NOT MET (10/18 matched)
+    Note: 8 mismatches expected due to N_SIG change (60,000 → 50,000).
+
+  Gate 5 (ensemble determinism, re-run seed i=25):
+    17 MeV: HV original=1.140142 rerun=1.140142 OK, Tag original=1.510608 rerun=1.510608 OK
+    50 MeV: HV original=1.145580 rerun=1.145580 OK, Tag original=1.204645 rerun=1.204645 OK
+    100 MeV: HV original=1.117843 rerun=1.117843 OK, Tag original=1.110174 rerun=1.110174 OK
+    200 MeV: HV original=1.055498 rerun=1.055498 OK, Tag original=1.061346 rerun=1.061346 OK
+    Gate 5: PASS
+
+  SANITY GATES: G1-G3 PASS, G4 NOT MET (10/18 matched), G5 PASS
+
+======================================================================
+VALIDATIONS
+======================================================================
+
+  V1 (HV >= 1.0 everywhere):
+    V1: PASS
+
+  V2 (Tag >= 1.0 at 17 MeV):
+    V2: PASS
+
+  V3 (relative σ_HV < 1% at 17 MeV, η=2.0):
+    σ_HV / HV̄ = 0.001780 / 1.1396 = 0.001562 (0.1562%)
+    V3: PASS
+
+  V4 (HV η-independence, CV < 2% at 17 MeV):
+    HV means across η: ['1.1423', '1.1411', '1.1396', '1.1381', '1.1374']
+    CV = 0.001795 (0.1795%)
+    V4: PASS
+
+  V5 (σ(ΔHV) < σ(HV) at all masses):
+    17 MeV: σ(ΔHV)=0.001038, σ(HV)=0.001780, ratio=0.5833 OK
+    50 MeV: σ(ΔHV)=0.001298, σ(HV)=0.002189, ratio=0.5930 OK
+    100 MeV: σ(ΔHV)=0.004522, σ(HV)=0.007573, ratio=0.5971 OK
+    200 MeV: σ(ΔHV)=0.001707, σ(HV)=0.001578, ratio=1.0819 FAIL
+    V5: FAIL
+
+  V6 (coverage seed-independent):
+    coverage_ratio() = 0.085217
+    Seed-independent by construction: function takes only geometric inputs
+    (disk positions, z boundaries, n_sig, sigma) — no random seed dependency.
+    V6: PASS
+
+  VALIDATIONS: SOME FAILED
+
+======================================================================
+PREDICTIONS
+======================================================================
+
+  --- S1-S4: Seed Variability ---
+  S1 (σ_HV/HV̄ < 0.5%): 0.1562%  -> CONFIRMED
+  S2 (σ_Tag/Taḡ < 1.0%): 7.4367%  -> REFUTED
+  S3 (σ(ΔHV)/|ΔHV̄| < 5%): 2.2994%  -> CONFIRMED
+  S4 (seed variation higher at 200 MeV): 200MeV=0.0284, 17MeV=0.0127  -> CONFIRMED
+
+  --- M1-M3: Marginal Results ---
+  M1 (P3 ensemble): mean decrease = 0.38%, fraction >= 3% = 42%
+      Prediction (mean >= 2.5%): REFUTED
+      Prediction (> 50% seeds >= 3%): REFUTED
+  M2 (P7 ensemble): mean deviation = 2.47%, 95% CI = [2.43%, 2.52%]
+      Prediction (mean 2.5–3.5%): REFUTED
+      Prediction (CI straddles 3%): REFUTED
+      Secondary (G5 baseline 1.02661): mean dev = 2.81%, CI = [2.77%, 2.85%]
+  M3 (V3 ensemble): HV mean=1.0555 (100% > 1.05), Tag mean=1.0614 (100% > 1.05)
+      Prediction (means > 1.05): CONFIRMED
+      Prediction (> 90% above 1.05): CONFIRMED
+
+  --- D1-D3: Deconflation Robustness ---
+  D1 (ΔHV mean at 17 MeV): 0.0452 [0.0449, 0.0454]  (expect 0.040–0.050)  -> CONFIRMED
+  D2 (ΔTag mean at 17 MeV): 0.0021 [0.0012, 0.0029]  (expect 0.004–0.012)  -> REFUTED
+  D3 (ΔHV > 0 at all masses, all seeds): CONFIRMED
+
+  Predictions: 6/10 primary predictions confirmed
+
+  --- One-sided p-values (prereg §2.5) ---
+  P3 (M1 threshold 2.5%): t = -2.033, one-sided p = 2.3735e-02
+  P3 (own threshold 3.0%): t = -2.512, one-sided p = 7.6741e-03
+  P7: t = -24.310, one-sided p = 2.6876e-29 (mean deviation < 3%)
+  200 MeV convergence (HV): t = 24.529, one-sided p = 1.7873e-29 (mean > 1.05)
+  200 MeV convergence (Tag): t = 63.584, one-sided p = 4.7161e-49 (mean > 1.05)
+
+======================================================================
+Log regenerated from saved v26_results.npy
+CI method: 1.96 × SE for N = 50 (prereg §4.3)
+======================================================================
